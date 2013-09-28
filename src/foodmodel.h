@@ -16,7 +16,6 @@ class FOOD_ITEM
 	double calories;	    // how many calories this has
 	int moodIndex; 		    // value -5 to 5, for your current mood
 	int choiceIndex;        // value -5 to 5, for how good of a choice this item is
-	bool bValidPicture;		// indicates the use of the picture
 	QString pictureURL;     // location of the picture (if used)
 	QString description;	// a string indicating what food item this is
 
