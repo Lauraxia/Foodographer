@@ -7,6 +7,20 @@ import "ChoicePage"
 NavigationPane
 {
     id: navPane
+    Menu.definition: MenuDefinition {
+        
+        // Specify the actions that should be included in the menu
+        actions: [
+            ActionItem {
+                title: "About"
+                //imageSource: "asset:///images/menuicons/icon_info.png"
+                
+                onTriggered: {
+                    //navPane.push(infoPage);
+                }
+            }
+        ] // end of actions list
+    } // end of MenuDefinition
     Page {
     id: firstPage
     actions: 
