@@ -10,3 +10,5 @@ x86/o-g/foodographer.bar
 *.name
 *.ts
 *.index
+*.cproject
+x86/o-g/.moc/moc_foodmodel.cpp
