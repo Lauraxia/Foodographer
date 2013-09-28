@@ -4,3 +4,7 @@ x86/Makefile.Release
 x86/o-g/.moc/moc_applicationui.cpp
 x86/o-g/foodographer
 x86/o-g/foodographer.bar
+*.jsdtscope
+*.prefs
+*.container
+*.name
