@@ -18,10 +18,31 @@ foodmodel::foodmodel(ApplicationUI *parent)
 {
 	appui = parent;
 
-	masterListFile = "master.xml";
-	readMaster();
+	//masterListFile = "master.xml";
+	//readMaster();
 
 
+}
+
+void foodmodel::AddItem()
+{
+	QVariantList displayList;
+
+		//stupid hack: insert a blank item first to attempt to circumvent draw/recycling issues
+		//with the first listitem:
+		QVariantMap newList2;
+		newList2.insert("test", "blank");
+		displayList.append(newList2);
+
+		QVariantMap newList;
+			newList.insert("valid", "false");
+			newList.insert("errorType", "network");
+			displayList.append(newList);
+
+		this->clear();
+			//this->
+			append(displayList);
+			qDebug() << "network error!";
 }
 
 void foodmodel::writeMaster()

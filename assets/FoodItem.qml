@@ -11,7 +11,18 @@ Container {
     property string picture: ListItemData.picture;
     
     Container {
+        preferredHeight: 340
+        preferredWidth: 340
+        minWidth: 340
+        maxWidth: 340
+        leftMargin: 20
+        rightMargin: 20
+        bottomMargin: 20
+        background: Color.White
         
+        Label {
+            text: "This is a test!"
+        }
     }
     
         

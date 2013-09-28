@@ -7,6 +7,8 @@ import "ChoicePage"
 NavigationPane
 {
     id: navPane
+    //property alias foodData: foodData
+    
     onCreationCompleted: {
     	Qt.navPane = navPane;
     }
@@ -24,8 +26,13 @@ NavigationPane
             }
         ] // end of actions list
     } // end of MenuDefinition
-    Page {
-    id: firstPage
+    
+    FirstPage 
+    {
+    	id: firstPage
+        foodData: _foodDataModel
+        //navPane: navPane 
+    
     actions: 
     [
         ActionItem 
@@ -49,24 +56,15 @@ NavigationPane
             }
         }
     ]
-	    Container {
-	        //Todo: fill me with QML
-	        background: Color.Black;
-	        Label {
-	            // Localized text with the dynamic translation and locale updates support
-	            text:"Hello World"
-	            textStyle.base: SystemDefaults.TextStyles.BigText
-	        }
-	    }
     }
-    attachedObjects: 
-    [
-        AddPage{
-        	id: addItemPage
-        },
-        ChoicePage{
-            id: choosePage
-            navPane: navPane
-        }
-    ]
+attachedObjects: 
+[
+    AddPage{
+        id: addItemPage
+    },
+    ChoicePage{
+        id: choosePage
+        navPane: navPane
+    }
+]
 }

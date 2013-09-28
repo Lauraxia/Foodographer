@@ -1,36 +1,52 @@
 #include "applicationui.hpp"
+#include "foodmodel.h"
 
-#include <bb/cascades/Application>
-#include <bb/cascades/QmlDocument>
-#include <bb/cascades/AbstractPane>
-#include <bb/cascades/LocaleHandler>
+
 
 using namespace bb::cascades;
+
+foodmodel 	*foodModel;
 
 ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
         QObject(app)
 {
-    // prepare the localization
-    m_pTranslator = new QTranslator(this);
-    m_pLocaleHandler = new LocaleHandler(this);
-    if(!QObject::connect(m_pLocaleHandler, SIGNAL(systemLanguageChanged()), this, SLOT(onSystemLanguageChanged())))
-    {
-        // This is an abnormal situation! Something went wrong!
-        // Add own code to recover here
-        qWarning() << "Recovering from a failed connect()";
-    }
-    // initial load
-    onSystemLanguageChanged();
+	mQmlDocument = QmlDocument::create("asset:///main.qml").parent(this);;
 
-    // Create scene document from main.qml asset, the parent is set
-    // to ensure the document gets destroyed properly at shut down.
-    QmlDocument *qml = QmlDocument::create("asset:///main.qml").parent(this);
+	mQmlDocument->setContextProperty("ApplicationUI", this);
 
-    // Create root object for the UI
-    AbstractPane *root = qml->createRootObject<AbstractPane>();
+	AbstractPane *root = mQmlDocument->createRootObject<AbstractPane>();
 
-    // Set created root object as the application scene
-    app->setScene(root);
+	foodModel= new foodmodel(this);
+
+	qDebug() << "Loading Contexts...";
+	mQmlDocument->setContextProperty("_foodDataModel", foodModel);
+	qDebug() << "Loaded!";
+
+	NavigationPane *tabs;
+	if (!mQmlDocument->hasErrors())
+	{
+		tabs = mQmlDocument->createRootObject<NavigationPane>();
+		qDebug() << "yay";
+		if (tabs)
+		{
+			// Set the main application scene to NavigationPane.
+			Application::instance()->setScene(tabs);
+			qDebug() << "okay";
+		}
+		else
+		{
+			qDebug() << "yikes";
+		}
+	}
+	else
+	{
+		qDebug() << "oops";
+	}
+
+	app->setScene(root);
+	qDebug() << "adding item";
+	foodModel->AddItem();
+	qDebug() << "item added";
 }
 
 void ApplicationUI::onSystemLanguageChanged()

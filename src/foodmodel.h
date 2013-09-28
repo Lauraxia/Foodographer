@@ -36,6 +36,7 @@ class foodmodel: public FoodListModel
 	//Q_PROPERTY(QString city READ city WRITE setLocations NOTIFY cityChanged)
 	public:
 		foodmodel(ApplicationUI *parent);
+		Q_INVOKABLE void AddItem();
 	private:
 		ApplicationUI *appui;
 		void writeMaster();
