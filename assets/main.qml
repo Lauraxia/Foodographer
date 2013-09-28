@@ -2,13 +2,14 @@ import bb.cascades 1.0
 import bb.system 1.0
 import "AddPage"
 import "ChoicePage"
-
+import "CameraPage"
 
 NavigationPane
 {
     id: navPane
     onCreationCompleted: {
     	Qt.navPane = navPane;
+        Qt.cameraPage = cameraPage;
     }
     Menu.definition: MenuDefinition {
         
@@ -67,6 +68,10 @@ NavigationPane
         ChoicePage{
             id: choosePage
             navPane: navPane
+            cameraPage: cameraPage
+        },
+        CameraPage{
+            id: cameraPage
         }
     ]
 }

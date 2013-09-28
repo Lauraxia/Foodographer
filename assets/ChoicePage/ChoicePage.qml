@@ -4,11 +4,14 @@ import "../CameraPage"
 Page {
 	id: choicePage
 	property NavigationPane navPane: navPane
+    property CameraPage cameraPage: cameraPage
 	Container {
         ImageButton {
             id: camChoice
-            defaultImageSource: "asset:///images/placeholder.jpg"
+            defaultImageSource: "asset:///images/camera.png"
             horizontalAlignment: HorizontalAlignment.Center
+            scaleX: 4.0
+            scaleY: 4.0
             onClicked: {
                 navPane.push(cameraPage);
             }
@@ -27,9 +30,4 @@ Page {
             horizontalAlignment: HorizontalAlignment.Center            
         }
     }
-	attachedObjects: [
-    	CameraPage{
-                id: cameraPage
-        }
-    ]
 }
