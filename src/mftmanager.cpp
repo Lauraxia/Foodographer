@@ -1,9 +1,10 @@
 /*
+
  * mftmanager.cpp
  *
  *  Created on: 2013-09-28
  *      Author: Roblix
- */
+
 
 #include "mftmanager.h"
 
@@ -17,7 +18,7 @@ MFT_MANAGER::MFT_MANAGER()
 // dumps the qvariant list back into master file
 void MFT_MANAGER::writeMaster()
 {
-/*
+
 	// Add the employee list to a top-level QVariantMap, then wrap it in a QVariant
 	QVariantMap topLevelMasterFoodTable;
 	topLevelMasterFoodTable[".root"] = QVariant("masterfoodtable");
@@ -35,13 +36,13 @@ void MFT_MANAGER::writeMaster()
 	    XmlDataAccess xda;
 	    xda.save(myData, &file);
 	}
-*/
+
 
 }
 
 void MFT_MANAGER::readMaster()
 {
-/*
+
 	// Create a data model with sorting keys for <day>
 	GroupDataModel *model =
 	new GroupDataModel(QStringList() << "time" << "mood" << "calories" << "goodness" << "picture" << "description");
@@ -55,6 +56,7 @@ void MFT_MANAGER::readMaster()
 
 	// keep master list...
 	masterList = list.value<QVariantList>();
-*/
+
 }
+*/
 

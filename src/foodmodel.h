@@ -7,13 +7,15 @@
 #include <bb/cascades/Application>
 #include <bb/cascades/QmlDocument>
 #include <bb/cascades/QListDataModel>
+#include <bb/cascades/GroupDataModel>
+#include <bb/data/XmlDataAccess>
 #include "applicationui.hpp"
 
 #ifndef FOODMODEL_H_
 #define FOODMODEL_H_
 
 using namespace bb::cascades;
-//using namespace bb::data;
+using namespace bb::data;
 typedef bb::cascades::QListDataModel<QVariant> FoodListModel;
 
 
@@ -36,6 +38,12 @@ class foodmodel: public FoodListModel
 		foodmodel(ApplicationUI *parent);
 	private:
 		ApplicationUI *appui;
+		void writeMaster();
+		void readMaster();
+
+		QString masterListFile;
+		QVariantList masterList;
+		//XmlDataAccess xda;
 };
 #endif /* FOODMODEL_H_ */
 
