@@ -7,6 +7,9 @@ import "ChoicePage"
 NavigationPane
 {
     id: navPane
+    onCreationCompleted: {
+    	Qt.navPane = navPane;
+    }
     Menu.definition: MenuDefinition {
         
         // Specify the actions that should be included in the menu
@@ -63,6 +66,7 @@ NavigationPane
         },
         ChoicePage{
             id: choosePage
+            navPane: navPane
         }
     ]
 }

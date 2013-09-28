@@ -10,3 +10,4 @@ x86/o-g/foodographer.bar
 *.name
 *.ts
 *.index
+*.cproject
