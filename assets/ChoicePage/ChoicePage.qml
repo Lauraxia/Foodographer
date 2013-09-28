@@ -1,11 +1,15 @@
 import bb.cascades 1.0
 import "../CameraPage"
+import "../AddPage"
 
 Page {
 	id: choicePage
 	property NavigationPane navPane: navPane
     property CameraPage cameraPage: cameraPage
+    property AddPage addPage: addPage
 	Container {
+	    topPadding: 300
+	    bottomPadding: 300
         ImageButton {
             id: camChoice
             defaultImageSource: "asset:///images/camera.png"
@@ -24,10 +28,16 @@ Page {
                 orientation: LayoutOrientation.LeftToRight
             }
         }
-        Button {
-            id: inputChoice
-            text: "Text Input"
-            horizontalAlignment: HorizontalAlignment.Center            
+        
+        ImageButton {
+                    id: textChoice
+                    defaultImageSource: "asset:///images/ic_rename.png"
+                    horizontalAlignment: HorizontalAlignment.Center
+                    scaleX: 4.0
+                    scaleY: 4.0
+                    onClicked: {
+                        navPane.push(addPage);
+                    }
         }
     }
 }
