@@ -34,6 +34,7 @@ NavigationPane
     ]
 	    Container {
 	        //Todo: fill me with QML
+	        background: Color.Black;
 	        Label {
 	            // Localized text with the dynamic translation and locale updates support
 	            text:"Hello World"
