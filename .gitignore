@@ -8,3 +8,6 @@ x86/o-g/foodographer.bar
 *.prefs
 *.container
 *.name
+*.ts
+*.index
+*.cproject

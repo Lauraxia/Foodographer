@@ -7,6 +7,23 @@ import "ChoicePage"
 NavigationPane
 {
     id: navPane
+    onCreationCompleted: {
+    	Qt.navPane = navPane;
+    }
+    Menu.definition: MenuDefinition {
+        
+        // Specify the actions that should be included in the menu
+        actions: [
+            ActionItem {
+                title: "About"
+                //imageSource: "asset:///images/menuicons/icon_info.png"
+                
+                onTriggered: {
+                    //navPane.push(infoPage);
+                }
+            }
+        ] // end of actions list
+    } // end of MenuDefinition
     Page {
     id: firstPage
     actions: 
@@ -34,6 +51,7 @@ NavigationPane
     ]
 	    Container {
 	        //Todo: fill me with QML
+	        background: Color.Black;
 	        Label {
 	            // Localized text with the dynamic translation and locale updates support
 	            text:"Hello World"
@@ -48,6 +66,7 @@ NavigationPane
         },
         ChoicePage{
             id: choosePage
+            navPane: navPane
         }
     ]
 }
