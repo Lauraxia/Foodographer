@@ -1,9 +1,10 @@
 /*
+
  * mftmanager.h
  *
  *  Created on: 2013-09-28
  *      Author: Roblix
- */
+
 
 #ifndef MFTMANAGER_H_
 #define MFTMANAGER_H_
@@ -35,4 +36,5 @@ class MFT_MANAGER
 };
 
 
-#endif /* MFTMANAGER_H_ */
+#endif  MFTMANAGER_H_
+*/
