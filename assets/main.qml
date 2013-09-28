@@ -2,7 +2,7 @@ import bb.cascades 1.0
 import bb.system 1.0
 import "AddPage"
 import "ChoicePage"
-
+import "CameraPage"
 
 NavigationPane
 {
@@ -11,6 +11,8 @@ NavigationPane
     
     onCreationCompleted: {
     	Qt.navPane = navPane;
+        Qt.cameraPage = cameraPage;
+        Qt.addPage = addPage;
     }
     Menu.definition: MenuDefinition {
         
@@ -38,18 +40,18 @@ NavigationPane
         ActionItem 
         {
             ActionBar.placement: ActionBarPlacement.OnBar
-            title: "Add Food"
-            //imageSource: "asset:///images/menuicons/ic_nav_to.png"
+            title: "Share"
+            imageSource: "asset:///images/ic_share.png"
             onTriggered: 
             {
-                navPane.push(addItemPage);
+                //navPane.push(addItemPage);
             }
         },
         ActionItem 
         {
             ActionBar.placement: ActionBarPlacement.OnBar
-            title: "Choice"
-            //imageSource: "asset:///images/menuicons/ic_nav_to.png"
+            title: "Record"
+            imageSource: "asset:///images/ic_play.png"
             onTriggered: 
             {
                 navPane.push(choosePage);
@@ -57,14 +59,35 @@ NavigationPane
         }
     ]
     }
-attachedObjects: 
-[
-    AddPage{
-        id: addItemPage
-    },
-    ChoicePage{
-        id: choosePage
-        navPane: navPane
-    }
-]
+
+    attachedObjects: 
+    [
+        AddPage{
+        	id: addPage
+            navPane: navPane
+            actions: [
+                ActionItem {
+                    ActionBar.placement: ActionBarPlacement.OnBar
+                    title: "Save"
+                    imageSource: "asset:///images/ic_done.png"
+                    
+                    // When the action is selected, navigate directly
+                    // to the first Page
+                    onTriggered: {
+                        addPage.saveAll();
+                    }
+                }
+            ]
+        },
+        ChoicePage{
+            id: choosePage
+            navPane: navPane
+            cameraPage: cameraPage
+            addPage: addPage
+        },
+        CameraPage{
+            id: cameraPage
+        }
+    ]
+
 }
