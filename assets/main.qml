@@ -6,8 +6,32 @@ import "ChoicePage"
 
 NavigationPane
 {
+    id: navPane
     Page {
     id: firstPage
+    actions: 
+    [
+        ActionItem 
+        {
+            ActionBar.placement: ActionBarPlacement.OnBar
+            title: "Add Food"
+            //imageSource: "asset:///images/menuicons/ic_nav_to.png"
+            onTriggered: 
+            {
+                navPane.push(addItemPage);
+            }
+        },
+        ActionItem 
+        {
+            ActionBar.placement: ActionBarPlacement.OnBar
+            title: "Choice"
+            //imageSource: "asset:///images/menuicons/ic_nav_to.png"
+            onTriggered: 
+            {
+                navPane.push(choosePage);
+            }
+        }
+    ]
 	    Container {
 	        //Todo: fill me with QML
 	        Label {
@@ -17,6 +41,7 @@ NavigationPane
 	        }
 	    }
     }
+
     attachedObjects: [
         AddPage{
         	id: addItemPage
