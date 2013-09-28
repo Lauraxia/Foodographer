@@ -41,8 +41,8 @@ NavigationPane
 	        }
 	    }
     }
-
-    attachedObjects: [
+    attachedObjects: 
+    [
         AddPage{
         	id: addItemPage
         },
