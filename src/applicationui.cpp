@@ -13,7 +13,8 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
     // prepare the localization
     m_pTranslator = new QTranslator(this);
     m_pLocaleHandler = new LocaleHandler(this);
-    if(!QObject::connect(m_pLocaleHandler, SIGNAL(systemLanguageChanged()), this, SLOT(onSystemLanguageChanged()))) {
+    if(!QObject::connect(m_pLocaleHandler, SIGNAL(systemLanguageChanged()), this, SLOT(onSystemLanguageChanged())))
+    {
         // This is an abnormal situation! Something went wrong!
         // Add own code to recover here
         qWarning() << "Recovering from a failed connect()";
