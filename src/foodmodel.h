@@ -4,22 +4,38 @@
  *  Created on: 2013-09-28
  *      Author: Roblix
  */
+#include <bb/cascades/Application>
+#include <bb/cascades/QmlDocument>
+#include <bb/cascades/QListDataModel>
+#include "applicationui.hpp"
 
 #ifndef FOODMODEL_H_
 #define FOODMODEL_H_
 
-//#include <QString>
+using namespace bb::cascades;
+//using namespace bb::data;
+typedef bb::cascades::QListDataModel<QVariant> FoodListModel;
 
-class FOOD_ITEM
-{
-	public:
+
+
+class FOOD_ITEM {
+public:
 	double calories;	    // how many calories this has
 	int moodIndex; 		    // value -5 to 5, for your current mood
-	int choiceIndex;        // value -5 to 5, for how good of a choice this item is
+	int choiceIndex;     // value -5 to 5, for how good of a choice this item is
 	QString pictureURL;     // location of the picture (if used)
 	QString description;	// a string indicating what food item this is
 
 };
 
-
+class foodmodel: public FoodListModel
+{
+	Q_OBJECT
+	//Q_PROPERTY(QString city READ city WRITE setLocations NOTIFY cityChanged)
+	public:
+		foodmodel(ApplicationUI *parent);
+	private:
+		ApplicationUI *appui;
+};
 #endif /* FOODMODEL_H_ */
+
