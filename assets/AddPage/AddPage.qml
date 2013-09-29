@@ -8,6 +8,7 @@ Page
     id: addPage
     property int faceSelection;   
     property NavigationPane navPane: navPane 
+    property string imageUrl: imageUrl
     Container {
         topPadding: 40
         leftPadding: 40
@@ -192,7 +193,7 @@ Page
         var description = addFood.text;
         var calorieValue = Number(calories.text);
         var sliderValue = goodBadSlider.value;
-        var imageUrl = "";
+        
         var time = new Date().toString();
         ApplicationUI.AddFoodItem(imageUrl, description, calorieValue, faceSelection, sliderValue, time )
         navPane.pop();

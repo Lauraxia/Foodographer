@@ -41,9 +41,11 @@ Container {
 		            ImageView {
 		                maxHeight: 350
 		                maxWidth: 350
-		                imageSource: "asset:///images/placeholder.jpg"
+                        imageSource: (picture != "")? "file:///" + picture: "asset:///images/placeholder.jpg" ;
+                        
 		                scalingMethod: ScalingMethod.AspectFill
-		            }
+                        rotationZ: 90
+                    }
 		        }
 	        }
             

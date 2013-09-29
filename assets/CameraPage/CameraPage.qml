@@ -1,10 +1,11 @@
 import bb.cascades 1.0
 import bb.cascades.multimedia 1.0
 import bb.multimedia 1.0
+import "../AddPage"
 
 Page {
     id: cameraPage
-
+    property AddPage addPage: addPage
     Container {
         layout: DockLayout {
         }
@@ -40,9 +41,10 @@ Page {
 				onCreationCompleted: {
                     camera.open(CameraUnit.Rear);
                 }
-                onPhotoSaved: {
-                    navPane.pop();
-                    navPane.push(addPage);
+                onPhotoSaved: { 
+                   addPage.navPane.pop();
+                   addPage.navPane.push(addPage);
+                   addPage.imageUrl = fileName;
                 }
                 attachedObjects: [
                     CameraSettings {
