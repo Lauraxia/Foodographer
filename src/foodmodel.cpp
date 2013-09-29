@@ -24,25 +24,27 @@ foodmodel::foodmodel(ApplicationUI *parent)
 
 }
 
-void foodmodel::AddItem()
+void foodmodel::AddItem(QString imageUrl, QString description, int calorieValue, int faceSelection, double sliderValue, QString time)
 {
 	QVariantList displayList;
 
 		//stupid hack: insert a blank item first to attempt to circumvent draw/recycling issues
 		//with the first listitem:
-		QVariantMap newList2;
-		newList2.insert("test", "blank");
-		displayList.append(newList2);
 
 		QVariantMap newList;
-			newList.insert("valid", "false");
-			newList.insert("errorType", "network");
+			newList.insert("imageUrl", imageUrl);
+			newList.insert("description", description);
+			newList.insert("calorieValue", calorieValue);
+			newList.insert("faceSelection", faceSelection);
+			newList.insert("sliderValue", sliderValue);
+			newList.insert("time", time);
+
 			displayList.append(newList);
 
-		this->clear();
+		//this->clear();
 			//this->
 			append(displayList);
-			qDebug() << "network error!";
+			//qDebug() << "network error!";
 }
 
 void foodmodel::writeMaster()
@@ -85,5 +87,6 @@ void foodmodel::readMaster()
 	masterList = list.value<QVariantList>();*/
 
 }
+
 
 

@@ -138,6 +138,9 @@ Page
             value: 0.5
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Bottom
+            onValueChanged: {
+                console.debug(goodBadSlider.value);
+            }
         }
         Container 
         {
@@ -166,6 +169,9 @@ Page
         var description = addFood.text;
         var calorieValue = Number(calories.text);
         var sliderValue = goodBadSlider.value;
+        var imageUrl = "";
+        var time = new Date().toString();
+        ApplicationUI.AddFoodItem(imageUrl, description, calorieValue, faceSelection, sliderValue, time )
         navPane.pop();
         navPane.pop();
     }

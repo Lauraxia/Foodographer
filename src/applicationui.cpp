@@ -45,7 +45,7 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
 
 	app->setScene(root);
 	qDebug() << "adding item";
-	foodModel->AddItem();
+	//foodModel->AddItem();
 	qDebug() << "item added";
 }
 
@@ -58,4 +58,9 @@ void ApplicationUI::onSystemLanguageChanged()
     if (m_pTranslator->load(file_name, "app/native/qm")) {
         QCoreApplication::instance()->installTranslator(m_pTranslator);
     }
+}
+
+void ApplicationUI::AddFoodItem(QString imageUrl, QString description, int calorieValue, int faceSelection, double sliderValue, QString time)
+{
+	foodModel->AddItem(imageUrl, description, calorieValue, faceSelection, sliderValue, time);
 }

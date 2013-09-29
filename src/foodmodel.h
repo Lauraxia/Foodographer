@@ -36,7 +36,7 @@ class foodmodel: public FoodListModel
 	//Q_PROPERTY(QString city READ city WRITE setLocations NOTIFY cityChanged)
 	public:
 		foodmodel(ApplicationUI *parent);
-		Q_INVOKABLE void AddItem();
+		Q_INVOKABLE void AddItem(QString imageUrl, QString description, int calorieValue, int faceSelection, double sliderValue, QString time);
 	private:
 		ApplicationUI *appui;
 		void writeMaster();

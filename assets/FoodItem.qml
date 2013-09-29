@@ -2,14 +2,16 @@ import bb.cascades 1.0
 
 Container {
     id: foodItem
-    
-    property string desc: ListItemData.desc
+    property string desc: ListItemData.description
     property string time: ListItemData.time //TODO: as actual time variable?
-    property string mood: ListItemData.mood
-    property int calories: ListItemData.calories
-    property int scale: ListItemData.scale;
-    property string picture: ListItemData.picture;
+    property string mood: ListItemData.faceSelection
+    property int calories: ListItemData.calorieValue
+    property double scale: ListItemData.sliderValue;
+    property string picture: ListItemData.imageUrl;
     
+    onCreationCompleted: {
+        console.debug(scale);
+    }
     Container {
         layout: DockLayout {
             
@@ -30,7 +32,7 @@ Container {
             Container {
                 topPadding: 7
                 bottomPadding: 7
-                background: Color.DarkGreen;
+                background: Color.create((128 + 127*Math.cos(2.09439*scale))/255.0,(128 + 127*Math.cos(2.09439*scale-2.09439))/255.0,0,1)
                 verticalAlignment: VerticalAlignment.Top
                 Container {
                     topPadding: 3
@@ -47,18 +49,18 @@ Container {
             
         }
         Container {
-            bottomPadding: 50
-            preferredHeight: 50
-            maxHeight: 50
-            minHeight: 50
+            bottomPadding: 58
+            preferredHeight: 58
+            maxHeight: 58
+            minHeight: 58
             background: Color.White
             verticalAlignment: VerticalAlignment.Bottom
             horizontalAlignment: HorizontalAlignment.Fill
             
             Label {
-                text: "250"
+                text: calories
                 horizontalAlignment: HorizontalAlignment.Right
-                verticalAlignment: VerticalAlignment.Bottom
+                verticalAlignment: VerticalAlignment.Center
             
             }
             
@@ -68,10 +70,9 @@ Container {
             horizontalAlignment: HorizontalAlignment.Left;
             //leftPadding: 10
             ImageView {
-                imageSource: "asset:///images/0.png"
-                scaleX: 0.5                
-                scaleY: 0.5
-                
+                imageSource: "asset:///images/small/"+ mood+ ".png"
+               scaleX: 0.7
+               scaleY: 0.7
             }
         }
         
@@ -80,7 +81,7 @@ Container {
             verticalAlignment: VerticalAlignment.Top
             horizontalAlignment: HorizontalAlignment.Fill
             Label {
-                text: "9:17 AM"
+                text: time
                 horizontalAlignment: HorizontalAlignment.Right
                 bottomMargin: 0
                 textStyle.color: Color.White;

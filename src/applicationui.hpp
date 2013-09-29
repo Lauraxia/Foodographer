@@ -34,6 +34,7 @@ class ApplicationUI : public QObject
     Q_OBJECT
 public:
     ApplicationUI(bb::cascades::Application *app);
+    Q_INVOKABLE void AddFoodItem(QString imageUrl, QString description, int calorieValue, int faceSelection, double sliderValue, QString time);
     virtual ~ApplicationUI() { }
 private slots:
     void onSystemLanguageChanged();
