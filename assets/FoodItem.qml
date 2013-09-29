@@ -61,12 +61,17 @@ Container {
                 verticalAlignment: VerticalAlignment.Bottom
             
             }
+            
+        }
+        Container {
+            verticalAlignment: VerticalAlignment.Bottom;
+            horizontalAlignment: HorizontalAlignment.Left;
+            //leftPadding: 10
             ImageView {
                 imageSource: "asset:///images/0.png"
-                scaleX: 0.5
+                scaleX: 0.5                
                 scaleY: 0.5
-                verticalAlignment: VerticalAlignment.Bottom;
-                horizontalAlignment: HorizontalAlignment.Left;
+                
             }
         }
         
