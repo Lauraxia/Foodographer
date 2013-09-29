@@ -51,6 +51,8 @@ Page
             {
                 id: sadFace
                 verticalAlignment: VerticalAlignment.Center
+                preferredHeight: 138
+                minHeight: 138
                 onTouch: {
                     sadFace.setDefaultImageSource("asset:///images/0.png");
                     tiredFace.setDefaultImageSource("asset:///images/1g.png");
@@ -69,6 +71,8 @@ Page
             {
                 id: tiredFace
                 verticalAlignment: VerticalAlignment.Center
+                preferredHeight: 138
+                minHeight: 138
                 onTouch: {
                     faceSelection = 1;
                     sadFace.setDefaultImageSource("asset:///images/0g.png");
@@ -84,6 +88,8 @@ Page
             {
                 id: neutralFace
                 verticalAlignment: VerticalAlignment.Center
+                preferredHeight: 138
+                minHeight: 138
                 onTouch: {  
                     faceSelection = 2;
                     sadFace.setDefaultImageSource("asset:///images/0g.png");
@@ -99,6 +105,8 @@ Page
             {
                 id: happyFace
                 verticalAlignment: VerticalAlignment.Center
+                preferredHeight: 138
+                minHeight: 138
                 onTouch: {
                     faceSelection = 3;
                     sadFace.setDefaultImageSource("asset:///images/0g.png");
@@ -114,8 +122,10 @@ Page
             {
                 id: coolFace
                 verticalAlignment: VerticalAlignment.Center
+                preferredHeight: 138
+                minHeight: 138
                 onTouch: {
-                    faceSelection = 4
+                    faceSelection = 4;
                     sadFace.setDefaultImageSource("asset:///images/0g.png");
                     tiredFace.setDefaultImageSource("asset:///images/1g.png");
                     neutralFace.setDefaultImageSource("asset:///images/2g.png");
@@ -138,6 +148,9 @@ Page
             value: 0.5
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Bottom
+            onValueChanged: {
+                console.debug(goodBadSlider.value);
+            }
         }
         Container 
         {
@@ -157,6 +170,19 @@ Page
             }
         }
     }
+    function setDefault()
+    {
+        faceSelection = 2;
+        sadFace.setDefaultImageSource("asset:///images/0g.png");
+        tiredFace.setDefaultImageSource("asset:///images/1g.png");
+        neutralFace.setDefaultImageSource("asset:///images/2.png");
+        happyFace.setDefaultImageSource("asset:///images/3g.png");
+        coolFace.setDefaultImageSource("asset:///images/4g.png");
+        moodLabel.text ="How are you feeling? -- Neutral"
+        goodBadSlider.value = 0.5;
+        addFood.text = "";
+        calories.text = "";
+    }
     function saveAll()
     {
         if (isNaN(calories.text) || calories.text == "")
@@ -166,6 +192,9 @@ Page
         var description = addFood.text;
         var calorieValue = Number(calories.text);
         var sliderValue = goodBadSlider.value;
+        var imageUrl = "";
+        var time = new Date().toString();
+        ApplicationUI.AddFoodItem(imageUrl, description, calorieValue, faceSelection, sliderValue, time )
         navPane.pop();
         navPane.pop();
     }

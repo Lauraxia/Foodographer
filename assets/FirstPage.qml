@@ -20,6 +20,8 @@ Page
             }
             layout: GridListLayout {
                 columnCount: 2
+                cellAspectRatio: 0.8
+                //verticalCellSpacing: 80
             }
             listItemComponents: [
                 ListItemComponent {

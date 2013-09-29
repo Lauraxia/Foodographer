@@ -36,6 +36,7 @@ Page {
             scaleX: 4.0
             scaleY: 4.0
             onClicked: {
+                addPage.setDefault();
                 navPane.push(addPage);
             }
         }
