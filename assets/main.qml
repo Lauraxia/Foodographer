@@ -39,7 +39,7 @@ NavigationPane
     
     actions: 
     [
-        ActionItem 
+       /* ActionItem 
         {
             ActionBar.placement: ActionBarPlacement.OnBar
             title: "Share"
@@ -48,12 +48,12 @@ NavigationPane
             {
                 navPane.push(addItemPage);
             }
-        },
+        },*/
         ActionItem 
         {
             ActionBar.placement: ActionBarPlacement.OnBar
-            title: "Record"
-            imageSource: "asset:///images/ic_play.png"
+            title: "Add Food"
+            imageSource: "asset:///images/ic_add.png"
             onTriggered: 
             {
                 navPane.push(choosePage);
