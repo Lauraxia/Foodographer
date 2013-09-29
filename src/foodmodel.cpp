@@ -8,7 +8,7 @@
 #include "foodmodel.h"
 #include "applicationui.hpp"
 #include <bb/cascades/Application>
-
+#include <QTime>
 #include <bb/data/XmlDataAccess>
 
 using namespace bb::cascades;
@@ -17,7 +17,6 @@ using namespace bb::data;
 foodmodel::foodmodel(ApplicationUI *parent)
 {
 	appui = parent;
-
 	//masterListFile = "master.xml";
 	//readMaster();
 
@@ -37,7 +36,7 @@ void foodmodel::AddItem(QString imageUrl, QString description, int calorieValue,
 			newList.insert("calorieValue", calorieValue);
 			newList.insert("faceSelection", faceSelection);
 			newList.insert("sliderValue", sliderValue);
-			newList.insert("time", time);
+			newList.insert("time", QTime::currentTime().toString() );
 
 			displayList.append(newList);
 
