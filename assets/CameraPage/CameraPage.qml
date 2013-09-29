@@ -1,221 +1,166 @@
+/* Copyright (c) 2012 Research In Motion Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import bb.cascades 1.0
 import bb.cascades.multimedia 1.0
 import bb.multimedia 1.0
-import bb.cascades 1.0
-import bb.system 1.0
 
 Page {
-    titleBar: TitleBar {
-        title: "QML Camera Sample App"       
-    }
-    content: Container {
-        attachedObjects: [
-            SystemToast {
-                id: qmlToast
-            },
-            SystemSound {
-                id: menuKeySound
-                sound: SystemSound.InputKeypress
-            }
-        ]
+    id: page
+    
+    Container {
+        background: Color.Black
         
+        layout: DockLayout {}
+        
+        // The camera preview control
+        Camera {
+            id: camera
+            
+            horizontalAlignment: HorizontalAlignment.Fill
+            verticalAlignment: VerticalAlignment.Fill
+            
+            onCameraOpened: {
+                // Apply some settings after the camera was opened successfully
+                getSettings(cameraSettings)
+                cameraSettings.focusMode = CameraFocusMode.ContinuousAuto
+                cameraSettings.shootingMode = CameraShootingMode.Stabilization
+                applySettings(cameraSettings)
+                
+                // Start the view finder as it is needed by the barcode detector
+                camera.startViewfinder()
+            }
+            
+            attachedObjects: [
+                CameraSettings {
+                    id: cameraSettings
+                }
+            ]
+        }
+        
+        // The overlay image
+        ImageView {
+            horizontalAlignment: HorizontalAlignment.Fill
+            verticalAlignment: VerticalAlignment.Fill
+            
+            imageSource: "asset:///images/overlay.png"
+        }
+        
+        // The area at the top that shows the results
         Container {
-            // The QML Camera object.
-            Camera {
-                id: qmlCameraObj               
-                property bool photoBeingTaken
+            id: resultArea
+            
+            horizontalAlignment: HorizontalAlignment.Fill
+            verticalAlignment: VerticalAlignment.Top
+            
+            layout: DockLayout {}
+            
+            visible: false
+            
+            ImageView {
+                horizontalAlignment: HorizontalAlignment.Fill
+                verticalAlignment: VerticalAlignment.Fill
                 
-                attachedObjects: [
-                    // Required to play the shutter sound.
-                    SystemSound {
-                        id: shutterSound
-                        sound: SystemSound.CameraShutterEvent
-                    },
-                    CameraSettings {
-                        id: camSettings
-                        onFlashModeChanged: {
-                            displayFlashMode(camSettings.flashMode);
-                        }
-                    }
-                ]
+                imageSource: "asset:///images/result_background.png"
+            }
+            
+            Label {
+                id: resultLabel
                 
-                onTouch: {
-                    if (photoBeingTaken == false) {
-                        photoBeingTaken = true;
-                        qmlCameraObj.capturePhoto();
-                    }
+                horizontalAlignment: HorizontalAlignment.Center
+                verticalAlignment: VerticalAlignment.Center
+                
+                textStyle {
+                    base: SystemDefaults.TextStyles.TitleText
+                    color: Color.White
+                    textAlign: TextAlign.Center
                 }
                 
-                // In many countries the law requires that a shutter-sound be played
-                // when an app is taking pictures. Further, if you're planning on
-                // submitting your app to BlackBerry World, then it's required that
-                // it must play the shutter sound when taking photos.
-                onShutterFired: {
-                    shutterSound.play();
+                multiline: true
+            }
+        }
+        
+        // The upper cover image
+        ImageView {
+            id: topCover
+            
+            horizontalAlignment: HorizontalAlignment.Center
+            verticalAlignment: VerticalAlignment.Top
+            
+            imageSource: "asset:///images/top_cover.png"
+            
+            onTouch: {
+                if (event.isDown())
+                    startupAnimation.play()
+            }
+        }
+        
+        // The lower cover image
+        ImageView {
+            id: bottomCover
+            
+            horizontalAlignment: HorizontalAlignment.Center
+            verticalAlignment: VerticalAlignment.Bottom
+            
+            imageSource: "asset:///images/bottom_cover.png"
+            
+            onTouch: {
+                if (event.isDown())
+                    startupAnimation.play()
+            }
+        }
+        
+        // The startup animation that slides out the cover images
+        animations: ParallelAnimation {
+            id: startupAnimation
+            
+            SequentialAnimation {
+                target: topCover
+                TranslateTransition {
+                    fromY: 0
+                    toY: -640
+                    duration: 1250
+                    easingCurve: StockCurve.QuarticInOut
                 }
-                
-                onCameraOpened: {
-                    // Once the camera is opened, start
-                    // the viewfinder.
-                    qmlCameraObj.startViewfinder();
-                }
-                
-                onCameraOpenFailed: {
-                    // Report the failure.
-                    qmlToast.body = "Camera failed to open";
-                    qmlToast.show();
-                    
-                    return;
-                }
-                
-                onViewfinderStarted: {
-                    photoBeingTaken = false;
-                }
-                
-                onViewfinderStartFailed: {
-                    qmlToast.body = "Viewfinder could not be started";
-                    qmlToast.show();
-                    
-                    return;
-                }
-                
-                onPhotoCaptureFailed: {
-                    qmlToast.body = "Photo could not be taken";
-                    qmlToast.show();
-                    photoBeingTaken = false;
-                    
-                    return;
-                }
-                
-                onPhotoSaveFailed: {
-                    qmlToast.body = "Photo could not be saved";
-                    qmlToast.show();
-                    photoBeingTaken = false;
-                }
-                
-                onPhotoSaved: {
-                    qmlToast.body = "Photo was successfully saved";
-                    qmlToast.show();
-                    photoBeingTaken = false;
+            }
+            SequentialAnimation {
+                target: bottomCover
+                TranslateTransition {
+                    fromY: 0
+                    toY: 680
+                    duration: 1250
+                    easingCurve: StockCurve.QuarticInOut
                 }
             }
             
-            onCreationCompleted: {
-                var cameraUnit = getCameraUnit(qmlCameraObj.supportedCameras);
-                
-                if (cameraUnit == null) {
-                    qmlToast.body = "No camera units were found";
-                    qmlToast.show();
-                    
-                    return;
-                } else {
-                    qmlCameraObj.open(cameraUnit);
-                }
-                
-                displayFlashMode(camSettings.flashMode);
+            onStarted: {
+                camera.open()
+            }
+            
+            onEnded: {
+                // Work around a bug temporarily
+                camera.open()
             }
         }
     }
     
-    // Actions menu.
-    actions: [
-        ActionItem {
-            title: "Flash Mode: Off"
-            ActionBar.placement: ActionBarPlacement.InOverflow
-            onTriggered: {
-                menuKeySound.play();
-                qmlCameraObj.getSettings(camSettings);
-                camSettings.flashMode = CameraFlashMode.Off;
-                qmlCameraObj.applySettings(camSettings);
-            }
-        },
-        ActionItem {
-            title: "Flash Mode: On"
-            ActionBar.placement: ActionBarPlacement.InOverflow
-            onTriggered: {
-                menuKeySound.play();
-                qmlCameraObj.getSettings(camSettings);
-                camSettings.flashMode = CameraFlashMode.On;
-                qmlCameraObj.applySettings(camSettings);
-            }
-        },
-        ActionItem {
-            title: "Flash Mode: Auto"
-            ActionBar.placement: ActionBarPlacement.InOverflow
-            onTriggered: {
-                menuKeySound.play();
-                qmlCameraObj.getSettings(camSettings);
-                camSettings.flashMode = CameraFlashMode.Auto;
-                qmlCameraObj.applySettings(camSettings);
-            }
-        },
-        ActionItem {
-            title: "Flash Mode: Light"
-            ActionBar.placement: ActionBarPlacement.InOverflow
-            onTriggered: {
-                menuKeySound.play();
-                qmlCameraObj.getSettings(camSettings);
-                camSettings.flashMode = CameraFlashMode.Light;
-                qmlCameraObj.applySettings(camSettings);
-            }
+    attachedObjects: [
+        SystemSound {
+            id: scannedSound
+            
+            sound: SystemSound.GeneralNotification
         }
     ]
-    
-    // This function returns an accessible camera unit. It starts
-    // by first checking to see if the Rear camera unit is
-    // available and if it's accessible, it's returned. If not,
-    // then it checks to see if the front camera unit is available,
-    // and again, if it's accessible it's returned. If there are no
-    // accessible camera units, this function returns null and shows
-    // a toast to the user.
-    function getCameraUnit(camUnitList) {
-        // Find a supported camera unit.
-        if (camUnitList.length == 0 || camUnitList[0] == CameraUnit.None) {
-            // Show a message toast.
-            qmlToast.body = "No camera units are accessible";
-            qmlToast.show();
-            
-            return null;
-        }
-        
-        // We prefer to have the Rear camera unit open first,
-        // so we test for that one first, and if we find it, we
-        // return it. Otherwise, we'll look for the Front camera
-        // unit, and if we find it, we'll return it.
-        for (var i = 0; i < camUnitList.length; ++ i) {
-            if (camUnitList[i] == CameraUnit.Rear)
-                return camUnitList[i];
-        }
-        
-        for (var j = 0; j < camUnitList.length; ++ j) {
-            if (camUnitList[i] == CameraUnit.Front)
-                return camUnitList[i];
-        }
-    }
-    
-    // Displays the current flash mode in a system toast.
-    function displayFlashMode(flashMode) {
-        var newFlashMode = "Flash Mode: Error";
-        
-        switch (flashMode) {
-            case 0:
-                newFlashMode = "Flash Mode: Off";
-                break;
-            
-            case 1:
-                newFlashMode = "Flash Mode: On";
-                break;
-            
-            case 2:
-                newFlashMode = "Flash Mode: Auto";;
-                break;
-            
-            case 3:
-                newFlashMode = "Flash Mode: Light";;
-                break;
-        }
-        
-        // Show a message toast.
-        qmlToast.body = newFlashMode;
-        qmlToast.show();
-    }
 }
