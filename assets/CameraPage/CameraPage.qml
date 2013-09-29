@@ -44,6 +44,7 @@ Page {
                 onPhotoSaved: { 
                    addPage.navPane.pop();
                    addPage.navPane.push(addPage);
+                   addPage.setDefault();
                    addPage.imageUrl = fileName;
                 }
                 attachedObjects: [
