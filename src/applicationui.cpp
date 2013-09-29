@@ -1,50 +1,38 @@
 
 #include "applicationui.hpp"
 #include "foodmodel.h"
+#include <bb/cascades/multimedia/CameraSettings>
+#include <Qt/qdeclarativedebug.h>
+#include <QtCore/QObject>
+#include <QtCore/QMetaType>
+#include <bb/cascades/multimedia/Camera>
+
+#include <bb/cascades/Application>
 
 using namespace bb::cascades;
+using namespace bb::cascades::multimedia;
+
 
 foodmodel 	*foodModel;
-
 ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
         QObject(app)
 {
-	mQmlDocument = QmlDocument::create("asset:///main.qml").parent(this);;
-
-	mQmlDocument->setContextProperty("ApplicationUI", this);
-
-	AbstractPane *root = mQmlDocument->createRootObject<AbstractPane>();
+	qml = QmlDocument::create("asset:///main.qml");
+	qml->setContextProperty("ApplicationUI", this);
 	foodModel= new foodmodel(this);
+	qml->setContextProperty("_foodDataModel", foodModel);
 
-	qDebug() << "Loading Contexts...";
-	mQmlDocument->setContextProperty("_foodDataModel", foodModel);
-	qDebug() << "Loaded!";
-
-	NavigationPane *tabs;
-	if (!mQmlDocument->hasErrors())
+	if (!qml->hasErrors())
 	{
-		tabs = mQmlDocument->createRootObject<NavigationPane>();
-		qDebug() << "yay";
-		if (tabs)
+		// The application Page is created from QML.
+		NavigationPane *appPage = qml->createRootObject<NavigationPane>();
+
+		if (appPage)
 		{
-			// Set the main application scene to NavigationPane.
-			Application::instance()->setScene(tabs);
-			qDebug() << "okay";
-		}
-		else
-		{
-			qDebug() << "yikes";
+			// Set the application scene.
+			Application::instance()->setScene(appPage);
 		}
 	}
-	else
-	{
-		qDebug() << "oops";
-	}
-
-	app->setScene(root);
-	qDebug() << "adding item";
-	//foodModel->AddItem();
-	qDebug() << "item added";
 }
 
 void ApplicationUI::onSystemLanguageChanged()
