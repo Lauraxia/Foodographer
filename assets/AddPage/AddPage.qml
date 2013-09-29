@@ -183,6 +183,7 @@ Page
         goodBadSlider.value = 0.5;
         addFood.text = "";
         calories.text = "";
+        imageUrl = "";
     }
     function saveAll()
     {
