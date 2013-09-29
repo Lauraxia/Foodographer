@@ -50,6 +50,7 @@ Container {
         }
         Container {
             bottomPadding: 58
+            rightPadding: 5
             preferredHeight: 58
             maxHeight: 58
             minHeight: 58
