@@ -16,10 +16,11 @@
 import bb.cascades 1.0
 import bb.cascades.multimedia 1.0
 import bb.multimedia 1.0
+import "../AddPage"
 
 Page {
-    id: page
-    
+    id: cameraPage
+    property AddPage addPage: addPage
     Container {
         background: Color.Black
         
@@ -31,7 +32,11 @@ Page {
             
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
-            
+            onCreationCompleted: {
+                camera.open();
+                camera.photoCaptured.connect(onPhotoCaptured)
+                camera.photoCapturedFailed.connect(onPhotoCaptureFailed)
+            }
             onCameraOpened: {
                 // Apply some settings after the camera was opened successfully
                 getSettings(cameraSettings)
@@ -42,6 +47,14 @@ Page {
                 // Start the view finder as it is needed by the barcode detector
                 camera.startViewfinder()
             }
+            onPhotoCaptured: {
+                console.debug("CAMERA CAPTURE SUCCESS!")
+            }
+            onPhotoCaptureFailed: {
+                console.debug("CAMARA CAPTURE FAILED");
+            }
+            onViewfinderStarted: {
+            }
             
             attachedObjects: [
                 CameraSettings {
@@ -50,14 +63,12 @@ Page {
             ]
         }
         
-        // The overlay image
-        ImageView {
-            horizontalAlignment: HorizontalAlignment.Fill
-            verticalAlignment: VerticalAlignment.Fill
-            
-            imageSource: "asset:///images/overlay.png"
+        Label {
+            autoSize.maxLineCount: 1
+            text: "Tap To Take a Picture"
+            horizontalAlignment: HorizontalAlignment.Center
+            textStyle.color: Color.White
         }
-        
         // The area at the top that shows the results
         Container {
             id: resultArea
@@ -68,98 +79,21 @@ Page {
             layout: DockLayout {}
             
             visible: false
-            
-            ImageView {
-                horizontalAlignment: HorizontalAlignment.Fill
-                verticalAlignment: VerticalAlignment.Fill
-                
-                imageSource: "asset:///images/result_background.png"
-            }
-            
-            Label {
-                id: resultLabel
-                
-                horizontalAlignment: HorizontalAlignment.Center
-                verticalAlignment: VerticalAlignment.Center
-                
-                textStyle {
-                    base: SystemDefaults.TextStyles.TitleText
-                    color: Color.White
-                    textAlign: TextAlign.Center
-                }
-                
-                multiline: true
-            }
         }
-        
-        // The upper cover image
         ImageView {
-            id: topCover
-            
-            horizontalAlignment: HorizontalAlignment.Center
-            verticalAlignment: VerticalAlignment.Top
-            
-            imageSource: "asset:///images/top_cover.png"
-            
+            horizontalAlignment: HorizontalAlignment.Fill
+            verticalAlignment: VerticalAlignment.Fill
             onTouch: {
-                if (event.isDown())
-                    startupAnimation.play()
+                camera.capturePhoto();
+                addPage.navPane.push(addPage);
             }
         }
-        
-        // The lower cover image
-        ImageView {
-            id: bottomCover
-            
-            horizontalAlignment: HorizontalAlignment.Center
-            verticalAlignment: VerticalAlignment.Bottom
-            
-            imageSource: "asset:///images/bottom_cover.png"
-            
-            onTouch: {
-                if (event.isDown())
-                    startupAnimation.play()
-            }
-        }
-        
-        // The startup animation that slides out the cover images
-        animations: ParallelAnimation {
-            id: startupAnimation
-            
-            SequentialAnimation {
-                target: topCover
-                TranslateTransition {
-                    fromY: 0
-                    toY: -640
-                    duration: 1250
-                    easingCurve: StockCurve.QuarticInOut
-                }
-            }
-            SequentialAnimation {
-                target: bottomCover
-                TranslateTransition {
-                    fromY: 0
-                    toY: 680
-                    duration: 1250
-                    easingCurve: StockCurve.QuarticInOut
-                }
-            }
-            
-            onStarted: {
-                camera.open()
-            }
-            
-            onEnded: {
-                // Work around a bug temporarily
-                camera.open()
-            }
-        }
+
     }
     
     attachedObjects: [
         SystemSound {
             id: scannedSound
-            
             sound: SystemSound.GeneralNotification
         }
     ]

@@ -30,14 +30,14 @@ Page {
         }
         
         ImageButton {
-                    id: textChoice
-                    defaultImageSource: "asset:///images/ic_rename.png"
-                    horizontalAlignment: HorizontalAlignment.Center
-                    scaleX: 4.0
-                    scaleY: 4.0
-                    onClicked: {
-                        navPane.push(addPage);
-                    }
+            id: textChoice
+            defaultImageSource: "asset:///images/ic_rename.png"
+            horizontalAlignment: HorizontalAlignment.Center
+            scaleX: 4.0
+            scaleY: 4.0
+            onClicked: {
+                navPane.push(addPage);
+            }
         }
     }
 }
