@@ -1,7 +1,6 @@
+
 #include "applicationui.hpp"
 #include "foodmodel.h"
-
-
 
 using namespace bb::cascades;
 
@@ -15,7 +14,6 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
 	mQmlDocument->setContextProperty("ApplicationUI", this);
 
 	AbstractPane *root = mQmlDocument->createRootObject<AbstractPane>();
-
 	foodModel= new foodmodel(this);
 
 	qDebug() << "Loading Contexts...";

@@ -9,8 +9,11 @@
 #include <bb/cascades/Application>
 #include <bb/cascades/AbstractPane>
 #include <bb/cascades/LocaleHandler>
-
-using namespace bb::cascades;
+#include <bb/cascades/multimedia/CameraSettings>
+#include <bb/cascades/multimedia/Camera>
+#include <bb/multimedia/SystemSound>
+#include <bb/cascades/TouchEvent>
+#include <bb/system/SystemToast>
 
 namespace bb
 {
@@ -20,6 +23,9 @@ namespace bb
         class LocaleHandler;
     }
 }
+using namespace bb::cascades;
+using namespace bb::multimedia;
+using namespace bb::cascades::multimedia;
 
 class QTranslator;
 

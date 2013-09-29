@@ -14,12 +14,13 @@
  */
 
 import bb.cascades 1.0
-import bb.cascades.multimedia 1.0
+import bb.system 1.0
 import bb.multimedia 1.0
+import bb.cascades.multimedia 1.0
 import "../AddPage"
 
 Page {
-    id: cameraPage
+    id: camera
     property AddPage addPage: addPage
     Container {
         background: Color.Black
@@ -28,67 +29,72 @@ Page {
         
         // The camera preview control
         Camera {
-            id: camera
+            id: objCamera
             
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
+            onTouch: {
+                
+                if(event.isDown())
+                {
+                    console.debug("capturing?");
+                	objCamera.capturePhoto();
+                }
+                
+            }
             onCreationCompleted: {
-                camera.open();
-                camera.photoCaptured.connect(onPhotoCaptured)
-                camera.photoCapturedFailed.connect(onPhotoCaptureFailed)
+                 objCamera.open(CameraUnit.Rear);
             }
             onCameraOpened: {
                 // Apply some settings after the camera was opened successfully
                 getSettings(cameraSettings)
                 cameraSettings.focusMode = CameraFocusMode.ContinuousAuto
                 cameraSettings.shootingMode = CameraShootingMode.Stabilization
+                cameraSettings.cameraRollPath = "/accounts/1000/shared/camera";
                 applySettings(cameraSettings)
                 
                 // Start the view finder as it is needed by the barcode detector
-                camera.startViewfinder()
+                objCamera.startViewfinder()
+                
             }
             onPhotoCaptured: {
                 console.debug("CAMERA CAPTURE SUCCESS!")
             }
-            onPhotoCaptureFailed: {
-                console.debug("CAMARA CAPTURE FAILED");
+            onCameraOpenFailed: {
+                console.debug("onCameraOpenFailed signal received with error " + error);
             }
-            onViewfinderStarted: {
+            onViewfinderStartFailed: {
+                console.debug("viewfinderStartFailed signal received with error " + error);
+            }
+            onViewfinderStopFailed: {
+                console.debug("viewfinderStopFailed signal received with error " + error);
+            }
+            onPhotoCaptureFailed: {
+                console.debug("photoCaptureFailed signal received with error " + error);
+            }
+            onPhotoSaveFailed: {
+                console.debug("photoSaveFailed signal received with error " + error);
+            }
+            onPhotoSaved: {
+                console.debug("photoSaved successfully, filaName:" + fileName);
+                addPage.navPane.push(addPage);
             }
             
+            onCameraResourceAvailable: {
+                // This signal handler is triggered when the Camera resource becomes available to app
+                // after being lost by for example putting the phone to sleep, once it has been received
+                // it is possible to start the viewfinder again.
+                objCamera.startViewfinder()
+            }
+            onReviewImageReady: {
+                console.debug("previewready");
+            }
             attachedObjects: [
                 CameraSettings {
                     id: cameraSettings
                 }
             ]
         }
-        
-        Label {
-            autoSize.maxLineCount: 1
-            text: "Tap To Take a Picture"
-            horizontalAlignment: HorizontalAlignment.Center
-            textStyle.color: Color.White
-        }
-        // The area at the top that shows the results
-        Container {
-            id: resultArea
-            
-            horizontalAlignment: HorizontalAlignment.Fill
-            verticalAlignment: VerticalAlignment.Top
-            
-            layout: DockLayout {}
-            
-            visible: false
-        }
-        ImageView {
-            horizontalAlignment: HorizontalAlignment.Fill
-            verticalAlignment: VerticalAlignment.Fill
-            onTouch: {
-                camera.capturePhoto();
-                addPage.navPane.push(addPage);
-            }
-        }
-
     }
     
     attachedObjects: [

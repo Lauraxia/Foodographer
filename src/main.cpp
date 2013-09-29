@@ -3,7 +3,9 @@
 #include <QLocale>
 #include <QTranslator>
 #include "applicationui.hpp"
-
+#include <bb/cascades/multimedia/Camera>
+#include <bb/cascades/multimedia/CameraSettings>
+#include <bb/cascades/multimedia/CameraUnit>
 #include <Qt/qdeclarativedebug.h>
 
 using namespace bb::cascades;
