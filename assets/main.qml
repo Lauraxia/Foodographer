@@ -87,6 +87,7 @@ NavigationPane
         },
         CameraPage{
             id: cameraPage
+            addPage: addPage
         }
     ]
 

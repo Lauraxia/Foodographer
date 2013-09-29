@@ -1,7 +1,5 @@
 import bb.cascades 1.0
 
-
-
 Page 
 {
     titleBar: TitleBar {
@@ -128,7 +126,6 @@ Page
                 defaultImageSource: "asset:///images/4g.png"
             }
         }
-
         Divider {
 
         }
@@ -136,7 +133,6 @@ Page
             text: "Was this a good choice?"
             //horizontalAlignment: HorizontalAlignment.Center
         }
-        
         Slider {
             id: goodBadSlider
             value: 0.5
