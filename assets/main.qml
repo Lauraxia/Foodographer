@@ -1,5 +1,7 @@
 import bb.cascades 1.0
 import bb.system 1.0
+import bb.cascades.multimedia 1.0
+import bb.multimedia 1.0
 import "AddPage"
 import "ChoicePage"
 import "CameraPage"
@@ -44,7 +46,7 @@ NavigationPane
             imageSource: "asset:///images/ic_share.png"
             onTriggered: 
             {
-                //navPane.push(addItemPage);
+                navPane.push(addItemPage);
             }
         },
         ActionItem 
@@ -60,6 +62,7 @@ NavigationPane
     ]
     }
 
+    
     attachedObjects: 
     [
         AddPage{
@@ -87,7 +90,7 @@ NavigationPane
         },
         CameraPage{
             id: cameraPage
-            addPage: addPage
+            //addPage: addPage
         }
     ]
 

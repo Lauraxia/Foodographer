@@ -14,15 +14,10 @@
 #include <bb/multimedia/SystemSound>
 #include <bb/cascades/TouchEvent>
 #include <bb/system/SystemToast>
+#include <QtCore/QObject>
+#include <QtCore/QMetaType>
 
-namespace bb
-{
-    namespace cascades
-    {
-        class Application;
-        class LocaleHandler;
-    }
-}
+
 using namespace bb::cascades;
 using namespace bb::multimedia;
 using namespace bb::cascades::multimedia;
@@ -48,6 +43,7 @@ private:
     QTranslator* m_pTranslator;
     bb::cascades::LocaleHandler* m_pLocaleHandler;
     QmlDocument *mQmlDocument;
+    QmlDocument *qml;
 };
 
 #endif /* ApplicationUI_HPP_ */
